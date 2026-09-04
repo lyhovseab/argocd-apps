@@ -7,7 +7,6 @@ metadata:
     app.kubernetes.io/instance: maintenance
     app.kubernetes.io/component: maintenance
   name: maintenance-vhost-config
-namespace: koppa
 data:
   default.conf: |
     server {
@@ -32,7 +31,6 @@ metadata:
     app.kubernetes.io/instance: maintenance
     app.kubernetes.io/component: maintenance
   name: maintenance-html-content
-namespace: koppa
 data:
   index.html: |
     <!DOCTYPE html>
