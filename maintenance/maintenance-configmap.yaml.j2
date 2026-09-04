@@ -1,0 +1,85 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/name: maintenance
+    app.kubernetes.io/instance: maintenance
+    app.kubernetes.io/component: maintenance
+  name: maintenance-vhost-config
+namespace: koppa
+data:
+  default.conf: |
+    server {
+        listen 8080;
+        server_name  _;
+        location / {
+            add_header Cache-Control "private, no-cache, no-store, must-revalidate" always;
+            error_page 405 500 502 503 504 =503 $uri;
+            try_files $uri /index.html =503;
+        }
+
+        root  /usr/share/nginx/html;
+        index  index.html;
+    }
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/name: maintenance
+    app.kubernetes.io/instance: maintenance
+    app.kubernetes.io/component: maintenance
+  name: maintenance-html-content
+namespace: koppa
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Maintenance in progress</title>
+        <style>
+            .wrapper {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                font-family: Aleo;
+                margin-top: 100px;
+                text-align: center;
+                color: #000000;
+                line-height: 20px;
+            }
+            a {
+                color: #339bb2;
+                text-decoration: none;
+            }
+            .title-description {
+                font-weight: bold;
+                font-size: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div style="display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    font-family: Aleo;
+                    margin-top: 100px;
+                    text-align: center;
+                    color: #000000;
+                    line-height: 20px;">
+            <h1>Maintenance in progress</h1>
+            <img src="https://d2u1hinstq9old.cloudfront.net/images/maintenance_screen/maintenance.svg" alt="image not found!" width="209.55px;" height="203.29px;">
+            <p style="font-weight: bold;
+                    font-size: 20px;">
+                We'll be back soon! </p>
+            <p>
+                Thank you for your patience. <br/>
+                Please contact support for more information.
+            </p>
+        </div>
+    </body>
+    </html>
