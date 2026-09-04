@@ -6,7 +6,7 @@ metadata:
     app.kubernetes.io/name: maintenance
     app.kubernetes.io/instance: maintenance
     app.kubernetes.io/component: maintenance
-  name: maintenance
+  name: maintenance-deployment
 spec:
   replicas: 1
   selector:
