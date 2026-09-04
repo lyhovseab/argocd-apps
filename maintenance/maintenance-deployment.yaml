@@ -21,7 +21,7 @@ spec:
         app.kubernetes.io/component: maintenance
     spec:
       containers:
-        - image: nginx: 1.28.0-alpine-perl
+        - image: nginx:1.28.0-alpine-perl
           imagePullPolicy: IfNotPresent
           name: maintenance
           ports:
