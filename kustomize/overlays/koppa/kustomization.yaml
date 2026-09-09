@@ -1,0 +1,12 @@
+resources:
+- ../../base
+
+# namespace: koppa
+
+patches:
+  - path: replicas.yaml
+
+configMapGenerator:
+- name: maintenance-html-content
+  files:
+    - index.html

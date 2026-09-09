@@ -1,0 +1,26 @@
+resources:
+- deployment.yaml
+- service.yaml
+
+
+commonLabels:
+  app.kubernetes.io/name: maintenance
+  app.kubernetes.io/instance: maintenance
+  app.kubernetes.io/component: maintenance
+
+commonAnnotations:
+  app.kubernetes.io/name: kustomize
+
+namePrefix:
+  kustom-
+
+nameSuffix:
+  -v1
+
+configMapGenerator:
+- name: maintenance-vhost-config
+  files:
+    - default.conf
+# - name: maintenance-html-content
+#   files:
+#     - index.html

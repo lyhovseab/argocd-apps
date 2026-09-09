@@ -1,0 +1,12 @@
+resources:
+- ../../base
+
+# namespace: theta
+
+patches:
+  - path: replicas.yaml
+
+configMapGenerator:
+- name: maintenance-html-content
+  files:
+    - index.html

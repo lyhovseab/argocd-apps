@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/lyhovseab/argocd-apps.git
     targetRevision: HEAD
-    path: maintenance
+    path: argocd/maintenance
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd-apps
