@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: traefik
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    # 1. The official Traefik Helm chart source
+    - repoURL: https://traefik.github.io/charts
+      chart: traefik
+      targetRevision: 41.5.0
+      helm:
+        valueFiles:
+          # The $values variable references the 'ref: values' from the Git repo below.
+          # Update the path to match where your file lives in your Git repo.
+          - $values/helm/traefik-values.yaml
+
+    # 2. Your Git repository holding the traefik-values.yaml file
+    - repoURL: https://github.com/lyhovseab/argocd-apps.git
+      targetRevision: HEAD
+      ref: values # This reference name must match the $variable used above
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: traefik
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

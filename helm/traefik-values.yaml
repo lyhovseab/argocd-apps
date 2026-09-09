@@ -1,0 +1,44 @@
+# additionalArguments:
+# - --providers.file.filename=/config/traefik-config.yaml
+deployment:
+  imagePullSecrets: null
+  podLabels:
+    app.kubernetes.io/name: traefik
+    app.kubernetes.io/instance: traefik
+    app.kubernetes.io/component: traefik
+    app.kubernetes.io/deployment: helm-app
+  replicas: 1
+affinity:
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: traefik
+            app.kubernetes.io/instance: traefik
+        topologyKey: kubernetes.io/hostname
+global:
+  checkNewVersion: false
+  sendAnonymousUsage: false
+instanceLabelOverride: traefik
+
+resources:
+  limits:
+    cpu: 2000m
+    memory: 1Gi
+  requests:
+    cpu: 100m
+    memory: 50Mi
+
+service:
+  enabled: true
+  spec:
+    type: LoadBalancer
+
+ingressRoute:
+  dashboard:
+    # -- Create an IngressRoute for the dashboard
+    enabled: true
+
+providers:
+  kubernetesCRD:
+    allowCrossNamespace: true
