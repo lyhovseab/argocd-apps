@@ -1,0 +1,8 @@
+# apiVersion: kustomize.config.k8s.io/v1beta1
+# kind: Kustomization
+namespace: koppa
+resources:
+  - ../../base
+patches:
+  - path: onlyoffice-token-secret-patch.yaml
+  - path: onlyoffice-ingress-patch.yaml

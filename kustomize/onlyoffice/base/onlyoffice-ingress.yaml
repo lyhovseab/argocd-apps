@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-secured-header@kubernetescrd,theta-onlyoffice-header@kubernetescrd
+    traefik.ingress.kubernetes.io/router.tls: 'true'
+  name: onlyoffice-docserver
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: default.local
+      http:
+        paths:
+          - backend:
+              service:
+                name: onlyoffice-docserver
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - default.local
+      secretName: local

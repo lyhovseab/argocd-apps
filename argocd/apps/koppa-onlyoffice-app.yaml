@@ -1,17 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kustomize-maintenance
+  name: koppa-kustomize-onlyoffice
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/lyhovseab/argocd-apps.git
     targetRevision: HEAD
-    path: kustomize/overlays/theta
+    path: kustomize/onlyoffice/overlays/koppa
   destination:
     server: https://kubernetes.default.svc
-    namespace: theta
+    namespace: koppa
   syncPolicy:
     syncOptions:
     - CreateNamespace=true

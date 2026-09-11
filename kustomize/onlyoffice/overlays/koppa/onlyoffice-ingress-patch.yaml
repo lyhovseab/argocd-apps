@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: onlyoffice-docserver
+  annotations:
+    # This merges perfectly, overwriting only the middlewares annotation
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-secured-header@kubernetescrd,koppa-onlyoffice-header@kubernetescrd
+spec:
+  rules:
+    - $patch: delete
+      host: default.local         # Removes the base rule
+    - host: koppa-docserver.local # Injects the complete koppa rule
+      http:
+        paths:
+          - backend:
+              service:
+                name: onlyoffice-docserver
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
+  tls:
+    - $patch: delete
+      hosts:
+        - default.local           # Removes the base TLS block
+    - hosts:
+        - koppa-docserver.local   # Injects the koppa TLS block
+      secretName: local
